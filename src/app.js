@@ -3,6 +3,7 @@ const globalErrorHandler = require("./utils/globalErrorHandler");
 const applyDefaultMiddleWares = require("./middlewares/applyDefaultMiddleWares");
 const action = require("./router/v1/call-to-action/index");
 const connectDB = require("./db/connectDB");
+const router = require("./router/v1/pets");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -11,6 +12,7 @@ const port = process.env.PORT || 5000;
 applyDefaultMiddleWares(app);
 
 app.use(action);
+app.use(router);
 
 app.get('/health', (req, res) => {
     res.send('Server is running');

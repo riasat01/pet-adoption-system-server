@@ -5,20 +5,20 @@ const callToActionGet = async (req, res) => {
         const result = await CallToAction.find();
         res.send(result);
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        res.status(400).send({ error: error?.message });
     }
 
 }
 
 const callToActionPost = async (req, res) => {
-    const data = req.body;
     try {
+        const data = req.body;
         const newData = new CallToAction(data);
         const result = await newData.save()
-        console.log(result, 'result from post');
+        // console.log(result, 'result from post');
         res.send(result);
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        res.status(400).send({ error: error?.message });
     }
 }
 
