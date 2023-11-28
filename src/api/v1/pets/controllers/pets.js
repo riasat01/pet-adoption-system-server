@@ -3,7 +3,15 @@ const Pets = require("../../../../models/Pets");
 const petsGet = async (req, res) => {
     try {
         const query = req.query.category;
-        if (query) {
+        const name = req.query.name;
+        if(name){
+            const filter = { name: name };
+            const options = {
+                sort: { date: -1 }
+            }
+            const result = await Pets.find(filter, null, options)
+            res.send(result);
+        }else if (query) {
             const filter = { category: query };
             const options = {
                 sort: { date: -1 }
