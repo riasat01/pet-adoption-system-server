@@ -1,28 +1,31 @@
-const Pets = require("../../../../models/Pets");
+const {Pets} = require("../../../../models/Pets");
 
 const petsGet = async (req, res) => {
     try {
         const query = req.query.category;
         const name = req.query.name;
-        if(name){
-            const filter = { name: name };
+        if (name) {
+            const filter = { name: name, adopted: false };
             const options = {
                 sort: { date: -1 }
             }
             const result = await Pets.find(filter, null, options)
             res.send(result);
-        }else if (query) {
-            const filter = { category: query };
+        } else if (query) {
+            const filter = { category: query, adopted: false };
             const options = {
                 sort: { date: -1 }
             }
             const result = await Pets.find(filter, null, options)
             res.send(result);
         } else {
+            const filter = {
+                adopted: false
+            }
             const options = {
                 sort: { date: -1 }
             }
-            const result = await Pets.find(null, null, options);
+            const result = await Pets.find(filter, null, options);
             res.send(result);
         }
     } catch (error) {
@@ -52,4 +55,22 @@ const postAPet = async (req, res) => {
     }
 }
 
-module.exports = { petsGet, getAPet, postAPet }
+const updatePets = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const info = req.body.adopted
+        const filter = { _id: id };
+        const updatedDoc = {
+            $set: {
+                adopted: info
+            }
+        }
+        const result = await Pets.updateOne(filter, updatedDoc, null);
+        console.log(result, 'hitted here');
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+}
+
+module.exports = { petsGet, getAPet, postAPet, updatePets }

@@ -24,8 +24,12 @@ const PetsSchema = new Schema({
     "date": {
         type: Date,
         required: true
+    },
+    "adopted": {
+        type: Boolean,
+        required: true
     }
 });
 
 const Pets = new model("pet", PetsSchema);
-module.exports = Pets;
+module.exports = {Pets, PetsSchema};
