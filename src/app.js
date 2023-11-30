@@ -4,13 +4,22 @@ const applyDefaultMiddleWares = require("./middlewares/applyDefaultMiddleWares")
 const action = require("./router/v1/call-to-action/index");
 const connectDB = require("./db/connectDB");
 const petRouter = require("./router/v1/pets/index");
-const adoptionRouter = require("./router/v1/adoption/index")
+const adoptionRouter = require("./router/v1/adoption/index");
+const authRouter = require("./router/v1/authentication/index");
+const userRouter = require("./router/v1/users/index");
+const removeTokenRouter = require("./router/v1/remove-token/index");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 
 // apply builtin middlewares
 applyDefaultMiddleWares(app);
+
+// authToken
+app.use('/jwt', authRouter);
+app.use('/logout', removeTokenRouter);
+
+app.use('/user', userRouter);
 
 app.use('/call-to-action', action);
 app.use('/pets', petRouter);
