@@ -58,15 +58,17 @@ const postAPet = async (req, res) => {
 const updatePets = async (req, res) => {
     try {
         const id = req.params.id;
-        const info = req.body.adopted
+        const info = req.body;
         const filter = { _id: id };
         const updatedDoc = {
             $set: {
-                adopted: info
+                shortDescription: info?.shortDescription,
+                longDescription: info?.longDescription,
+                email: info?.email
             }
         }
         const result = await Pets.updateOne(filter, updatedDoc, null);
-        console.log(result, 'hitted here');
+        console.log(result, 'hitted here', info);
         res.send(result);
     } catch (error) {
         res.status(400).send({ error: error.message });

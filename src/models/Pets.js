@@ -28,6 +28,18 @@ const PetsSchema = new Schema({
     "adopted": {
         type: Boolean,
         required: true
+    },
+    "shortDescription": {
+        type: String,
+        required: true
+    },
+    "longDescription": {
+        type: String,
+        required: true
+    },
+    "email": {
+        type: String,
+        required: true
     }
 });
 

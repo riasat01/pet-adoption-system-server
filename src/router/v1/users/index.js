@@ -7,6 +7,6 @@ const router = require("express").Router();
 
 router.get('/', verifyToken, verifyAdmin, getUsers);
 router.post('/', postAnUser);
-router.get('/admin/:email', isAdmin);
+router.get('/admin/:email', verifyToken, isAdmin);
 
 module.exports = router;
