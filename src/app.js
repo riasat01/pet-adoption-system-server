@@ -8,6 +8,7 @@ const adoptionRouter = require("./router/v1/adoption/index");
 const authRouter = require("./router/v1/authentication/index");
 const userRouter = require("./router/v1/users/index");
 const removeTokenRouter = require("./router/v1/remove-token/index");
+const donationRouter = require("./router/v1/donation/index")
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -21,9 +22,11 @@ app.use('/logout', removeTokenRouter);
 
 app.use('/user', userRouter);
 
+// service routes
 app.use('/call-to-action', action);
 app.use('/pets', petRouter);
-app.use('/adopted', adoptionRouter)
+app.use('/adopted', adoptionRouter);
+app.use('/donation', donationRouter);
 
 app.get('/health', (req, res) => {
     res.send('Server is running');

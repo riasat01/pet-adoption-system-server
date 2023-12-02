@@ -9,16 +9,31 @@ const DonationDchema = new Schema({
         type: String,
         required: true
     },
-    "maxDonationAmount": {
+    "maxAmount": {
         type: Number,
         required: true
     },
     "donatedAmount": {
-        type: Number,
+        type: Number
+    },
+    "lastDate": {
+        type: Date,
         required: true
     },
-    "date": {
+    "createdDate": {
         type: Date,
+        required: true
+    },
+    "shortDescription": {
+        type: String,
+        required: true
+    },
+    "longDescription": {
+        type: String,
+        required: true
+    },
+    "email": {
+        type: String,
         required: true
     }
 });
