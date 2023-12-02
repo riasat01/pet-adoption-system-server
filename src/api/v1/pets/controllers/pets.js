@@ -1,4 +1,4 @@
-const {Pets} = require("../../../../models/Pets");
+const { Pets } = require("../../../../models/Pets");
 
 const petsGet = async (req, res) => {
     try {
@@ -33,6 +33,20 @@ const petsGet = async (req, res) => {
     }
 }
 
+const getPetWithEmail = async (req, res) => {
+    try {
+        const email = req.query?.email;
+        const filter = { email: email };
+        const options = {
+            sort: { date: -1 }
+        }
+        const result = await Pets?.find(filter, null, options);
+        res.send(result)
+    } catch (error) {
+        res.status(400).send({ error: error?.message });
+    }
+}
+
 const getAPet = async (req, res) => {
     try {
         const id = req.params.id;
@@ -62,17 +76,51 @@ const updatePets = async (req, res) => {
         const filter = { _id: id };
         const updatedDoc = {
             $set: {
+                imageURL: info?.imageURL,
+                name: info?.name,
+                age: info?.age,
+                location: info?.location,
+                date: info?.date,
+                adopted: info?.adopted,
                 shortDescription: info?.shortDescription,
                 longDescription: info?.longDescription,
                 email: info?.email
             }
         }
         const result = await Pets.updateOne(filter, updatedDoc, null);
-        console.log(result, 'hitted here', info);
+        // console.log(result, 'hitted here', info);
         res.send(result);
     } catch (error) {
         res.status(400).send({ error: error.message });
     }
 }
 
-module.exports = { petsGet, getAPet, postAPet, updatePets }
+const updateAdoptionStatus = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const info = req.body;
+        const filter = { _id: id };
+        const update = {
+            $set: {
+                adopted: true
+            }
+        }
+        const result = await Pets.updateOne(filter, update, null);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+}
+
+const deleteAPet = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const filter = {_id: id};
+        const result = await Pets.deleteOne(filter);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+}
+
+module.exports = { petsGet, getAPet, postAPet, updatePets, getPetWithEmail, updateAdoptionStatus, deleteAPet };
