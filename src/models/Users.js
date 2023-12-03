@@ -9,6 +9,10 @@ const UsersSchema = new Schema({
         type: String,
         required: true
     },
+    "imageURL":{
+        type: String,
+        required: true
+    },
     role: String
 })
 

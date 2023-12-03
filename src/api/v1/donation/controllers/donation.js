@@ -1,5 +1,19 @@
 const Donation = require("../../../../models/Donation");
 
+const getAllDonation = async (req, res) => {
+    try {
+        const options = {
+            sort: {
+                date: - 1
+            }
+        }
+        const result = await Donation.find(null, null, options);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    } 
+}
+
 const getDonation = async (req, res) => {
     try {
         const email = req.params.email;
@@ -16,6 +30,17 @@ const getDonation = async (req, res) => {
     }
 }
 
+const getADonation = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const filter = { _id: id };
+        const result = await Donation.findOne(filter, null, null);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+}
+
 const postADonation = async (req, res) => {
     try {
         const donationInfo = req.body;
@@ -23,8 +48,33 @@ const postADonation = async (req, res) => {
         const result = await newDonation.save();
         res.send(result);
     } catch (error) {
+        res.status(400).send({ error: error?.message });
+    }
+}
+
+const updateAdonation = async (req, res) => {
+    try {
+        const data = req.body;
+        const id = req.params.id;
+        const filter = { _id: id };
+        const updatedDoc = {
+            $set: {
+                imageUrl: data?.imageUrl,
+                name: data?.name,
+                maxAmount: data?.maxAmount,
+                donatedAmount: data?.donatedAmount,
+                lastDate: data?.lastDate,
+                createdDate: data?.createdDate,
+                shortDescription: data?.shortDescription,
+                longDescription: data?.longDescription,
+                email: data?.email
+            }
+        }
+        const result = await Donation.updateOne(filter, updatedDoc, null);
+        res.send(result);
+    } catch (error) {
         res.status(400).send({ error: error?.message })
     }
 }
 
-module.exports = {getDonation, postADonation};
+module.exports = { getADonation, getAllDonation, getDonation, postADonation, updateAdonation };

@@ -14,7 +14,8 @@ const DonationDchema = new Schema({
         required: true
     },
     "donatedAmount": {
-        type: Number
+        type: Number,
+        required: true
     },
     "lastDate": {
         type: Date,
