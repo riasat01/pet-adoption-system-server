@@ -1,4 +1,4 @@
-const Donation = require("../../../../models/Donation");
+const {Donation} = require("../../../../models/Donation");
 
 const getAllDonation = async (req, res) => {
     try {
@@ -73,8 +73,44 @@ const updateAdonation = async (req, res) => {
         const result = await Donation.updateOne(filter, updatedDoc, null);
         res.send(result);
     } catch (error) {
-        res.status(400).send({ error: error?.message })
+        res.status(400).send({ error: error?.message });
     }
 }
 
-module.exports = { getADonation, getAllDonation, getDonation, postADonation, updateAdonation };
+const updateDonatedAmount = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const amount = parseFloat(data?.amount);
+        const filter = {_id: id};
+        const requiredDonation = await Donation.findOne(filter, null, null);
+        let newAmount;
+        if(data?.needToAdd === true){
+            newAmount = requiredDonation?.donatedAmount + amount;
+        }else{
+            newAmount = requiredDonation?.donatedAmount - amount;
+        }
+        const updatedDoc = {
+            $set: {
+                donatedAmount: newAmount
+            }
+        }
+        const result = await Donation.updateOne(filter, updatedDoc, null);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error?.message });
+    }
+}
+
+const deleteADonation = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const filter = { _id: id };
+        const result = await Donation.deleteOne(filter, null, null);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error?.message });
+    }
+}
+
+module.exports = { getADonation, getAllDonation, getDonation, postADonation, updateAdonation, updateDonatedAmount, deleteADonation };

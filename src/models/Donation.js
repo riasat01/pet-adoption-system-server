@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const DonationDchema = new Schema({
+const DonationSchema = new Schema({
     "imageURL": {
         type: String,
         required: true
@@ -39,5 +39,5 @@ const DonationDchema = new Schema({
     }
 });
 
-const Donation = new model("donation", DonationDchema);
-module.exports = Donation;
+const Donation = new model("donation", DonationSchema);
+module.exports = {Donation, DonationSchema};
