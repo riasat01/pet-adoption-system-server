@@ -1,4 +1,4 @@
-const { getDonation, postADonation, getAllDonation, getADonation, updateAdonation, updateDonatedAmount, deleteADonation } = require("../../../api/v1/donation/controllers/donation");
+const { getDonation, postADonation, getAllDonation, getADonation, updateAdonation, updateDonatedAmount, deleteADonation, togglePaused } = require("../../../api/v1/donation/controllers/donation");
 const verifyAdmin = require("../../../middlewares/verifyAdmin");
 const verifyToken = require("../../../middlewares/verifyToken");
 
@@ -9,6 +9,7 @@ router.get('/id/:id', verifyToken, getADonation);
 router.get('/:email', verifyToken, getDonation);
 router.post('/', verifyToken, postADonation);
 router.put('/donated/:id', verifyToken, updateDonatedAmount);
+router.put('/togglePaused/:id', verifyToken, togglePaused);
 router.put('/:id', verifyToken, updateAdonation);
 router.delete('/:id', verifyToken, verifyAdmin, deleteADonation);
 

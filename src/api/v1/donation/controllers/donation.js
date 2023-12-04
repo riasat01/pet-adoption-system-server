@@ -67,7 +67,8 @@ const updateAdonation = async (req, res) => {
                 createdDate: data?.createdDate,
                 shortDescription: data?.shortDescription,
                 longDescription: data?.longDescription,
-                email: data?.email
+                email: data?.email,
+                isPaused: data?.isPaused
             }
         }
         const result = await Donation.updateOne(filter, updatedDoc, null);
@@ -102,6 +103,23 @@ const updateDonatedAmount = async (req, res) => {
     }
 }
 
+const togglePaused = async (req, res) => {
+    try {
+        const state = req.body.state;
+        const id = req.params.id;
+        const filter = { _id: id};
+        const updatedDoc = {
+            $set: {
+                isPaused: state
+            }
+        };
+        const result = await Donation.updateOne(filter, updatedDoc, null);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error?.message });
+    }
+}
+
 const deleteADonation = async (req, res) => {
     try {
         const id = req.params.id;
@@ -113,4 +131,4 @@ const deleteADonation = async (req, res) => {
     }
 }
 
-module.exports = { getADonation, getAllDonation, getDonation, postADonation, updateAdonation, updateDonatedAmount, deleteADonation };
+module.exports = { getADonation, getAllDonation, getDonation, postADonation, updateAdonation, updateDonatedAmount, deleteADonation, togglePaused };

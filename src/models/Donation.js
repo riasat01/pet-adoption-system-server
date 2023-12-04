@@ -36,6 +36,10 @@ const DonationSchema = new Schema({
     "email": {
         type: String,
         required: true
+    },
+    "isPaused": {
+        type: Boolean,
+        required: true
     }
 });
 

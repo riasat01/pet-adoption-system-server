@@ -2,8 +2,10 @@ const { Pets } = require("../../../../models/Pets");
 
 const petsGet = async (req, res) => {
     try {
-        const query = req.query.category;
-        const name = req.query.name;
+        const query = req.query?.category;
+        const name = req.query?.name;
+        const admin = req.query?.admin;
+        // console.log(1);
         if (name) {
             const filter = { name: name, adopted: false };
             const options = {
@@ -18,7 +20,14 @@ const petsGet = async (req, res) => {
             }
             const result = await Pets.find(filter, null, options)
             res.send(result);
-        } else {
+        } else if(admin){
+            const options = {
+                sort: { date: -1 }
+            }
+            // console.log(2);
+            const result = await Pets.find(null, null, options);
+            res.send(result);
+        }else {
             const filter = {
                 adopted: false
             }
@@ -29,6 +38,7 @@ const petsGet = async (req, res) => {
             res.send(result);
         }
     } catch (error) {
+        // console.log(3);
         res.status(400).send({ error: error?.message });
     }
 }
