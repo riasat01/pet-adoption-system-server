@@ -10,6 +10,14 @@ const AdoptionSchema = new Schema({
         type: String,
         required: true
     },
+    "phone": {
+        type: Number,
+        required: true
+    },
+    "location": { 
+        type: String,
+        required: true
+    },
     "pet": PetsSchema,
     "adoptedDate": {
         type: Date,
