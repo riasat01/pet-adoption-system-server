@@ -122,6 +122,23 @@ const updateAdoptionStatus = async (req, res) => {
     }
 }
 
+const makeNotAdopted = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const info = req.body;
+        const filter = { _id: id };
+        const update = {
+            $set: {
+                adopted: false
+            }
+        }
+        const result = await Pets.updateOne(filter, update, null);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+}
+
 const deleteAPet = async (req, res) => {
     try {
         const id = req.params.id;
@@ -133,4 +150,4 @@ const deleteAPet = async (req, res) => {
     }
 }
 
-module.exports = { petsGet, getAPet, postAPet, updatePets, getPetWithEmail, updateAdoptionStatus, deleteAPet };
+module.exports = { petsGet, getAPet, postAPet, updatePets, getPetWithEmail, updateAdoptionStatus, deleteAPet, makeNotAdopted };

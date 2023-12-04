@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 
 const applyDefaultMiddleWares = (app) => {
     app.use(cors({
-        origin: ['http://localhost:5173', 'https://petsnpals-7107f.web.app', 'https://petsnpals-7107f.firebaseapp.com'],
+        origin: [process.env.LOCAL_CLIENT, process.env.CLIENT, process.env.CLIENT_EXTRA],
         credentials: true
     }));
     app.use(express.json());

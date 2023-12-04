@@ -2,7 +2,6 @@ const Users = require("../../../../models/Users");
 
 const isAdmin = async (req, res) => {
     const email = req.params.email;
-    console.log(req.user)
     if (email !== req.user?.email) {
         return res.status(403).send({ message: 'forbidden access' })
     }
