@@ -14,6 +14,10 @@ const DonatorSchema = new Schema({
         type: String,
         required: true
     },
+    "donatedAmount": {
+        type: Number,
+        required: true
+    },
     "donation": DonationSchema
 })
 
